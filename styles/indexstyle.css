@@ -1,0 +1,54 @@
+.buttonsRow, .submitBox {
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.button {
+    width: 150px;
+    height: 60px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+.button::after {
+    /*content: '►';*/
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #5e0acc, #1b6ff2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.button:hover::after {
+    transform: translateX(5px);
+}
+
+.button:active {
+    background: linear-gradient(135deg, #5208b3, #1659c7);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.5);
+}

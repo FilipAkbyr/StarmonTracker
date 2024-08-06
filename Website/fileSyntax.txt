@@ -1,0 +1,26 @@
+Jak vytvořit soubor pro načtení výskytu prvku:
+
+Každý řádek reprezentuje jeden zápis, zápisy MUSÍ být na samostatných řádcích
+Jednotlivé informace jsou rozděleny pomocí "|", na pořadí informací nezáleží
+Každá informace má jeden počáteční znak určující o jakou informaci se jedná:
+
+f: FCS lokace do které chceme přidat prvek
+l: LCS lokace do které chceme přidat prvek
+d: Datum výskytu prvku, ve formátu YYYY-MM-DD
+n: Číslo a rok prvku ve formátu 00/0000
+i: Specifická pozice prvku v lokaci
+
+
+Příklad zápisu:
+f2|l2|d2006-01-01|n1/2000|i2
+Tento zápis vloží prvek s číslem 1/2000, na stanici s FCS 2, LCS 2 a na pozici 2, a datem zápisu 2006-01-01
+
+Zápisy různých prvků a lokací lze kombinovat
+Například:
+f2|l2|d2006-06-07|n1/2000|i2
+f2|l2|d2007-01-05|n1/2013|i1
+f1|l2|d2008-04-01|n4/2002|i2
+f3|l2|d2005-02-01|n1/2000|i4
+
+
+

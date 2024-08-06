@@ -1,0 +1,26 @@
+.buttonsBox {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    height: 250px;
+    width: 250px;
+}
+
+.buttonsRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.submitBox {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.button{
+    width: 150px;
+    height: 60px;
+}

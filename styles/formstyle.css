@@ -1,0 +1,126 @@
+    .smallBox,
+    .rowBox,
+    .tablesBox {
+        display: flex;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #ddd; /* Light gray border color */
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px; /* Padding inside the boxes */
+        margin: 10px 0; /* Margin between the boxes */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+
+
+    /* Row and column direction */
+    .smallBox {
+        flex-direction: row;
+    }
+    .rowBox {
+        display: flex;
+        justify-content: space-between; /* Space between tables */
+        width: 100%;
+        gap: 20px; /* Space between each section */
+        padding: 10px;
+    }
+    .tablesBox {
+        flex-direction: column;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%; /* Full width */
+        border-collapse: collapse; /* No gaps between cells */
+        margin: 20px 0px; /* Space above and below tables */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        table-layout: auto;
+    }
+
+    td {
+        text-align: center;
+        padding: 10px; /* Padding inside cells */
+        border: 1px solid #ddd; /* Light gray border between cells */
+        word-wrap: break-word;
+    }
+
+    th {
+        background-color: #f4f4f4; /* Light gray background for headers */
+        padding: 12px; /* Padding inside headers */
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #196282;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .section {
+        flex: 1; /* Equal width for each section */
+        margin: 0 8px; /* Optional, for adding space inside each section */
+    }
+
+    .section table {
+        width: 100%;
+    }
+
+    .section h2 {
+        font-size: 24px;
+        color: #196282;
+        text-align: left; /* Align left for distinction */
+        font-weight: bold;
+        margin-bottom: 10px; /* Space below the heading */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-left: 205px;
+    }
+
+    button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #196282;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #1080d0;
+    }
+
+    button:active {
+        background-color: #2575fc;
+    }
+
+    button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.5);
+    }
+
+    input[type="text"] {
+        width: calc(100% - 20px); /* Full width minus padding */
+        padding: 10px; /* Padding inside input */
+        margin: 10px 0; /* Space above and below input */
+        border: 1px solid #ddd; /* Light gray border */
+        border-radius: 4px; /* Rounded corners */
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow */
+        font-size: 16px; /* Larger text */
+    }
+
+
+    input[type="text"]:focus {
+        border-color: #aaa; /* Darker border on focus */
+        outline: none; /* Remove default outline */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Glow effect */
+    }
+
+
+
