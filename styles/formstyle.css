@@ -2,6 +2,7 @@
     .rowBox,
     .tablesBox {
         display: flex;
+        width: 1650px;
         border-width: 2px;
         border-style: solid;
         border-color: #ddd; /* Light gray border color */
@@ -20,9 +21,10 @@
     .rowBox {
         display: flex;
         justify-content: space-between; /* Space between tables */
-        width: 100%;
+        width: 1650px;
         gap: 20px; /* Space between each section */
         padding: 10px;
+
     }
     .tablesBox {
         flex-direction: column;
@@ -42,11 +44,14 @@
         padding: 10px; /* Padding inside cells */
         border: 1px solid #ddd; /* Light gray border between cells */
         word-wrap: break-word;
+
     }
 
     th {
         background-color: #f4f4f4; /* Light gray background for headers */
         padding: 12px; /* Padding inside headers */
+
+
     }
 
     h2 {
@@ -60,7 +65,7 @@
     }
 
     .section {
-        flex: 1; /* Equal width for each section */
+        flex: 0; /* Equal width for each section */
         margin: 0 8px; /* Optional, for adding space inside each section */
     }
 
@@ -71,12 +76,11 @@
     .section h2 {
         font-size: 24px;
         color: #196282;
-        text-align: left; /* Align left for distinction */
+        text-align: center; /* Align left for distinction */
         font-weight: bold;
         margin-bottom: 10px; /* Space below the heading */
         text-transform: uppercase;
         letter-spacing: 2px;
-        margin-left: 205px;
     }
 
     button {

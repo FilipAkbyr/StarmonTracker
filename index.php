@@ -16,7 +16,7 @@
         </div>
         <div class="buttonsRow">
             <a href="inputsites/historyform.php"><button class="button">Záznamy výskytu</button></a>
-            <a href="inputsites/maintenanceform.php"><button class="button">Záznamy opravy</button></a>
+            <a href="inputsites/maintenanceform.php"><button class="button">Servisní záznamy</button></a>
         </div>
         <div class="buttonsRow">
             <a href="inputsites/itemhistory.php"><button class="button">Historie prvku</button></a>

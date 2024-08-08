@@ -8,7 +8,7 @@ CREATE TABLE Items(
     TypeI BIGINT,
     INumber BIGINT NOT NULL,
     IYear BIGINT,
-    IState TINYINT,
+    IState BIGINT,
     UNIQUE (INumber),
     CHECK (IYear >= 2000),
     FOREIGN KEY (TypeI) REFERENCES ItemDictionary(TypeI)

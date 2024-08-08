@@ -69,7 +69,7 @@
         <h2>Prvky</h2>
         <table rules="all"> <!--Tabulka vypisujici veskere aktualni prvky v tabulkce Items-->
 
-                <th>ID</th>
+                <th>ID Prvku</th>
                 <th>Jméno</th>
                 <th>Číslo</th>
                 <th>Rok</th>
@@ -103,7 +103,7 @@
         <h2>Lokace</h2>
         <table rules="all"> <!--Tabulka vypisujici veskere aktualni lokace v tabulce Locations-->
 
-                <th>ID</th>
+                <th>ID Prvku</th>
                 <th>Jméno</th>
                 <th>LCS</th>
                 <th>FCS</th>
@@ -128,7 +128,7 @@
                         echo "<td>" . htmlspecialchars($row['LClass']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['LPosition']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['LDescription']) . "</td>";
-                        echo "<td><form action='../includes/delete_handler.php' method='post'><button type='submit' name='deleteLokace' value='" . htmlspecialchars($row['id']) . "'>Delete</button></form></td>";
+                        echo "<td><form action='../includes/deletehandler.inc.php' method='post' style='display:inline;'><input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'><button type='submit'>Smazat</button></form></td>";
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {
