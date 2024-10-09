@@ -10,10 +10,28 @@
 
 <body>
     <div class="rowBox"> <!--Formulář pro zadání informací -->
-        <form action="../includes/historyformhandler.inc.php" method="post" autocomplete="off"> 
+        <form action="../includes/historyformhandler.inc.php" method="post" autocomplete="off">
             <input type="text" id="itemID" name="itemID" placeholder="ID prvku">
             <br>
-            <input type="text" id="locationID" name="locationID" placeholder="ID lokace">
+            <div class="checkbox-menu">
+                <label for="locationID">Vyberte Lokaci:</label><br>
+                <?php
+                try {
+                    require_once ("../includes/dbh.inc.php");
+                    $query = "SELECT id, LName FROM Locations INNER JOIN LocationDictionary ON Locations.TypeL = LocationDictionary.TypeL;";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->execute();
+                    $locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach ($locations as $location) {
+                        echo '<input type="checkbox" name="locationID[]" value="' . htmlspecialchars($location['id']) . '"> ' . htmlspecialchars($location['LName']) . '<br>';
+                    }
+                } catch (PDOException $e) {
+                    die("Query failed: " . $e->getMessage());
+                }
+                ?>
+            </div>
+
             <br>
             <input type="text" id="date" name="date" placeholder="Datum prvního výskytu" title="YYYY-MM-DD">
             <br>

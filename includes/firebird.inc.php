@@ -30,7 +30,7 @@ if (($handle = fopen($filePath, 'r')) !== FALSE) {
 
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-        $result = ibase_execute($stmt, $data[0], $data[1]);
+        $result = ibase_execute($stmt, $data[0], $data[1]);     
 
         if ($result === false) {
             echo 'Data insertion failed for row: ' . implode(', ', $data) . '. Error: ' . ibase_errmsg() . "\n";
@@ -41,7 +41,7 @@ if (($handle = fopen($filePath, 'r')) !== FALSE) {
 
 
     fclose($handle);
-} else {
+} else { 
     die('Failed to open the file: ' . $filePath);
 }
 
