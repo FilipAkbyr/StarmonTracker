@@ -37,7 +37,7 @@
             <br>
             <input type="text" id="lastseendate" name="lastseendate" placeholder="Datum posledního výskytu" title="YYYY-MM-DD">
             <br>
-            <input type="text" id="historyIndex" name="historyIndex" placeholder="Příznak?" title="1-255">
+            <input type="text" id="historyIndex" name="historyIndex" placeholder="Pozice" title="1-255">
             <br><br>
             <button type="submit" value="submit">Odeslat</button>
         </form>
@@ -74,7 +74,14 @@
                         echo "<td>" . htmlspecialchars($row['HIndex']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['FirstSeen']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['LastSeen']) . "</td>";
-                        echo "<td><form action='../includes/deletehandler.inc.php' method='post' style='display:inline;'><input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'><button type='submit'>Smazat</button></form></td>";
+                        echo "<td>
+                                <form action='../includes/deletehandler.inc.php' method='post'>
+                                    <input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'>
+                                    <input type='hidden' name='table' value='History'>
+                                    <button type='submit'>Smazat</button>
+                                </form>
+                              </td>";
+                        echo "</tr>";
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {
@@ -85,7 +92,7 @@
         </div>
         <div class="section">
         <h2>Prvky</h2>
-        <table rules="all"> <!--Tabulka vypisujici veskere aktualni prvky v tabulkce Items-->
+        <table rules="all"> <!--Tabulka vypisujici veskere aktualni prvky v tabulce Items-->
 
                 <th>ID Prvku</th>
                 <th>Jméno</th>
@@ -108,7 +115,13 @@
                         echo "<td>" . htmlspecialchars($row['INumber']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['IYear']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['IState']) . "</td>";
-                        echo "<td><form action='../includes/deletehandler.inc.php' method='post' style='display:inline;'><input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'><button type='submit'>Smazat</button></form></td>";
+                        echo "<td>
+                                <form action='../includes/deletehandler.inc.php' method='post'>
+                                    <input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'>
+                                    <input type='hidden' name='table' value='Items'>
+                                    <button type='submit'>Smazat</button>
+                                </form>
+                              </td>";
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {
@@ -146,7 +159,13 @@
                         echo "<td>" . htmlspecialchars($row['LClass']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['LPosition']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['LDescription']) . "</td>";
-                        echo "<td><form action='../includes/deletehandler.inc.php' method='post' style='display:inline;'><input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'><button type='submit'>Smazat</button></form></td>";
+                        echo "<td>
+                                <form action='../includes/deletehandler.inc.php' method='post'>
+                                    <input type='hidden' name='id' value='" . htmlspecialchars($row['id']) . "'>
+                                    <input type='hidden' name='table' value='Locations'>
+                                    <button type='submit'>Smazat</button>
+                                </form>
+                              </td>";
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {

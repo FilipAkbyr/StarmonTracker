@@ -17,48 +17,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        $errmsg .= "ID lokace, ";
 //        $throwerr = true;
 //    }
-    if (isset($_POST['locationID']) && is_array($_POST['locationID'])) {
-        $locationIDs = $_POST['locationID'];
+        if (!empty($_POST['itemID']) && isset($_POST['locationID']) && is_array($_POST['locationID'])) {
 
-        foreach ($locationIDs as $locationID) {
-            $locationID = htmlspecialchars($locationID, ENT_QUOTES, 'UTF-8');
-        }
-    } else {
-        echo "No location selected.";
-    }
+        $itemID = htmlspecialchars($_POST['itemID'], ENT_QUOTES, 'UTF-8'); // Item ID (ID prvku)
+        $locations = $_POST['locationID']; // Array of selected locations (already an array due to is_array check)
 
+        // Sanitize and validate dates
+        $firstSeen = !empty($_POST['date']) ? htmlspecialchars($_POST['date'], ENT_QUOTES, 'UTF-8') : null;
+        $lastSeen = !empty($_POST['lastseendate']) ? htmlspecialchars($_POST['lastseendate'], ENT_QUOTES, 'UTF-8') : null;
+        $historyIndex = !empty($_POST['historyIndex']) ? htmlspecialchars($_POST['historyIndex'], ENT_QUOTES, 'UTF-8') : null;
+         
+        try {
+            // Database connection
+            require_once("../includes/dbh.inc.php"); 
 
-    if (!empty($_POST['itemID']) && isset($_POST['locationID'])) {
-            $itemID = $_POST['itemID']; // Item ID (ID prvku)
-            $locations = $_POST['locationID']; // Array of selected locations
-            $firstSeen = !empty($_POST['date']) ? $_POST['date'] : null;
-            $lastSeen = !empty($_POST['lastseendate']) ? $_POST['lastseendate'] : null;
-            $historyIndex = !empty($_POST['historyIndex']) ? $_POST['historyIndex'] : null;
+            // Loop through each selected location and insert it into the History table
+            foreach ($locations as $locationID) {
+                // Sanitize each location ID
+                $locationID = htmlspecialchars($locationID, ENT_QUOTES, 'UTF-8');
 
-            try {
-                // Database connection
-                require_once("../includes/dbh.inc.php");
-
-                // Loop through each selected location and insert it into the History table
-                foreach ($locations as $locationID) {
-                    $query = "INSERT INTO History (ItemID, LocationID, FirstSeen, LastSeen, HIndex) 
-                          VALUES (:itemID, :locationID, :firstSeen, :lastSeen, :historyIndex)";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->execute([
-                        ':itemID' => $itemID,
-                        ':locationID' => $locationID,
-                        ':firstSeen' => $firstSeen,
-                        ':lastSeen' => $lastSeen,
-                        ':historyIndex' => $historyIndex
-                    ]);
-                }
-
-            } catch (PDOException $e) {
-                die("Database error: " . $e->getMessage());
+                // Prepare and execute the insert query
+                $query = "INSERT INTO History (ItemID, LocationID, FirstSeen, LastSeen, HIndex) 
+                      VALUES (:itemID, :locationID, :firstSeen, :lastSeen, :historyIndex)";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute([
+                    ':itemID' => $itemID,
+                    ':locationID' => $locationID,
+                    ':firstSeen' => $firstSeen,
+                    ':lastSeen' => $lastSeen,
+                    ':historyIndex' => $historyIndex
+                ]);
             }
-        } else {
-            echo "Please provide an Item ID and select at least one location.";
+
+            echo "Data successfully saved to the database.";
+
+        } catch (PDOException $e) {
+            die("Database error: " . $e->getMessage());
         }
+
+    } else {
+        echo "Please provide an Item ID and select at least one location.";
+    }
 
     $date = $_POST["date"];
     if ($date == "" || !validateDate($date)) {
@@ -111,9 +110,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":Date", $date, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $rowID = $result[0]['id'];
-            $locationLog = $result[0]['LocationID'];
-            $indexLog = $result[0]['HIndex'];
+            if (!empty($result)) {
+                $rowID = $result[0]['id'];
+                $locationLog = $result[0]['LocationID'];
+                $indexLog = $result[0]['HIndex'];
+            } else {
+                echo "No matching records found in the History table.";
+            }
 
             if ($locationLog != $locationID || $indexLog != $index) {
                 $query = "UPDATE History SET LastSeen = :LastSeen WHERE id = :id;";

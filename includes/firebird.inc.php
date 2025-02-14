@@ -1,51 +1,84 @@
 <?php
-// Firebird database connection details
-$host = 'localhost:\D:\Prace\Starmontracker.fdb';
-$username = 'SYSDBA';
-$password = '123456789';
+session_start();
+require_once("../includes/dbh.inc.php");
+
+$sourceDbConfig = [
+    'dsn' => 'firebird:dbname=localhost:D:\Prace\STARMONTRACKER.fdb',
+    'user' => 'SYSDBA',
+    'password' => '123456789'
+];
+
+$sourceDb = null;
 
 
-$connection = ibase_connect($host, $username, $password);
 
-if (!$connection) {
-    die('Connection failed: ' . ibase_errmsg());
-}
+try {
+    // Připojení k databázi
+    $sourceDb = new PDO($sourceDbConfig['dsn'], $sourceDbConfig['user'], $sourceDbConfig['password']);
+    $sourceDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Path to data file
-$filePath = 'path/to/your/data.csv';
+    // Ověření, zda byl odeslán požadavek POST a obsahuje parametr 'akce'
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['akce'])) {
+        $akce = $_POST['akce'];
 
+        // Výběr dat z tabulky
+        $query = $sourceDb->query("SELECT * FROM ZAZNAMDAT");
+        $records = $query->fetchAll(PDO::FETCH_ASSOC);
 
-if (($handle = fopen($filePath, 'r')) !== FALSE) {
-
-    fgetcsv($handle);
-
-
-    $sql = "INSERT INTO your_table_name (field1, field2) VALUES (?, ?)";
-    $stmt = ibase_prepare($connection, $sql);
-
-    if ($stmt === false) {
-        die('Query preparation failed: ' . ibase_errmsg());
-    }
-
-
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-
-        $result = ibase_execute($stmt, $data[0], $data[1]);     
-
-        if ($result === false) {
-            echo 'Data insertion failed for row: ' . implode(', ', $data) . '. Error: ' . ibase_errmsg() . "\n";
-        } else {
-            echo 'Inserted row: ' . implode(', ', $data) . "\n";
+        // Funkce pro zobrazení celkového počtu záznamů
+        function getTotalRecords($records) {
+            return count($records);
         }
+
+        // Funkce pro smazání všech záznamů
+        function deleteAllRecords($records) {
+            global $sourceDb;
+            $sourceDb->exec("DELETE FROM ZAZNAMDAT");
+        }
+
+        // Funkce pro zobrazení prvního záznamu
+        function getFirstRecord($records) {
+            return isset($records[0]) ? $records[0] : null;
+        }
+
+        // Funkce pro zobrazení posledního záznamu
+        function getLastRecord($records) {
+            return isset($records[count($records) - 1]) ? $records[count($records) - 1] : null;
+        }
+
+        // Zpracování požadavku podle hodnoty 'akce'
+        switch ($akce) {
+            case 'pocet':
+                echo json_encode(["pocet" => getTotalRecords($records)]);
+                break;
+
+            case 'prvni':
+                $firstRecord = getFirstRecord($records);
+                echo json_encode($firstRecord ?: ["error" => "Žádný záznam nenalezen."]);
+                break;
+
+            case 'smazatvse':
+                deleteAllRecords($records);
+                echo json_encode(["success" => "Všechny záznamy byly smazány."]);
+                break;
+
+            case 'posledni':
+                $lastRecord = getLastRecord($records);
+                echo json_encode($lastRecord ?: ["error" => "Žádný záznam nenalezen."]);
+                break;
+
+            case 'vse':
+                echo json_encode($records);
+                break;
+
+            default:
+                echo json_encode(["error" => "Neplatná akce"]);
+                break;
+        }
+    } else {
+        echo json_encode(["error" => "Chybný požadavek"]);
     }
-
-
-    fclose($handle);
-} else { 
-    die('Failed to open the file: ' . $filePath);
+} catch (Exception $e) {
+    echo json_encode(["error" => "Chyba: " . $e->getMessage()]);
 }
-
-
-ibase_close($connection);
 ?>
-
